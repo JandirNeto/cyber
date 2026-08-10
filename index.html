@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cyber — plano de estudos</title>
+<meta name="description" content="Tracker do plano de estudos de cibersegurança: roteiro por fase, checklists, anotações e registro de sessões.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a1128'/><path d='M50 16 82 28v22c0 20-13 31-32 38C31 81 18 70 18 50V28z' fill='none' stroke='%2322e0ff' stroke-width='7'/></svg>">
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 100 100" fill="none" stroke="#22e0ff" stroke-width="8" stroke-linejoin="round">
+          <path d="M50 12 84 25v25c0 22-14 34-34 41C30 84 16 72 16 50V25z"/>
+          <path d="M36 50l10 11 19-21" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1>cyber<span>_</span>plano</h1>
+        <div class="sub">14–16 meses · ~10h efetivas/semana</div>
+      </div>
+      <div class="brand-right">
+        <div class="streak-chip" id="streakChip">
+          <span>corrente</span><b id="streakNum">0</b><span>dias</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <button data-tab="painel" class="active">Painel</button>
+      <button data-tab="roteiro">Roteiro &amp; Checklists</button>
+      <button data-tab="rotina">Rotina</button>
+      <button data-tab="notas">Anotações</button>
+      <button data-tab="sessoes">Sessões</button>
+      <button data-tab="regras">Regras</button>
+      <button data-tab="recursos">Recursos</button>
+      <button data-tab="backup">Backup</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ PAINEL ============ -->
+<section class="panel active" id="tab-painel">
+
+  <div id="alertaBox"></div>
+
+  <div class="grid g2" style="margin-bottom:18px">
+    <div class="card neon">
+      <div class="eyebrow">Progresso geral</div>
+      <div class="ring-wrap">
+        <div class="ring">
+          <svg viewBox="0 0 132 132">
+            <defs>
+              <linearGradient id="neonGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0aa9d6"/>
+                <stop offset="60%" stop-color="#22e0ff"/>
+                <stop offset="100%" stop-color="#b6f6ff"/>
+              </linearGradient>
+            </defs>
+            <circle class="track" cx="66" cy="66" r="56"/>
+            <circle class="fill" id="ringFill" cx="66" cy="66" r="56" stroke-dasharray="352" stroke-dashoffset="352"/>
+          </svg>
+          <div class="val" id="ringVal">0%</div>
+        </div>
+        <div>
+          <p id="pgResumo" class="muted" style="margin:0 0 10px"></p>
+          <p class="faint" style="margin:0">O percentual mede marcos do roteiro, não horas.
+          Marco riscado é conhecimento que você consegue explicar em voz alta — não conteúdo que você assistiu.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Números</div>
+      <div class="grid g2" style="gap:14px">
+        <div class="stat"><div class="num" id="mSessoes">0</div><div class="lbl">sessões registradas</div></div>
+        <div class="stat"><div class="num" id="mHoras">0</div><div class="lbl">horas acumuladas</div></div>
+        <div class="stat"><div class="num plain" id="mUlt8">0</div><div class="lbl">sessões nas últimas 8 semanas</div></div>
+        <div class="stat"><div class="num plain" id="mNotas">0</div><div class="lbl">anotações escritas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card neon" style="margin-bottom:18px">
+    <div class="eyebrow">Presença — últimas 26 semanas</div>
+    <div class="heat" id="heat"></div>
+    <div class="heat-legend">
+      <span>menos</span>
+      <i style="background:rgba(28,48,92,.5)"></i>
+      <i style="background:rgba(34,224,255,.28)"></i>
+      <i style="background:rgba(34,224,255,.55)"></i>
+      <i style="background:#22e0ff;box-shadow:0 0 8px rgba(34,224,255,.6)"></i>
+      <span>mais</span>
+      <span style="margin-left:14px">· cada quadrado é um dia; a cor vem dos minutos registrados</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="eyebrow">Progresso por fase</div>
+    <div id="fasesProg"></div>
+  </div>
+
+  <div class="grid g2">
+    <div class="card">
+      <div class="eyebrow">Revisão a cada 8 semanas</div>
+      <ul class="clean" id="revisaoLista" style="font-size:.9rem"></ul>
+      <div class="callout">Se 1 e 2 forem sim, você está no caminho — independente do que o cronograma diz.
+      Se a 3 for não, o problema não é disciplina: é a trilha. Antecipe a Fase 3 antes de desistir da área inteira.</div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Como usar isto sem virar armadilha</div>
+      <ul class="clean" style="font-size:.89rem">
+        <li><strong>Abre na segunda às 19h</strong> — é o ritual de abertura, 10 minutos, zero decisão.</li>
+        <li><strong>Fecha às 22h25</strong> — registra a sessão, escreve as 5 linhas, commita.</li>
+        <li><strong>Não abre o código.</strong> Este site está terminado. Vontade de melhorar ele = Regra 5 batendo na porta.</li>
+        <li><strong>O tracker de verdade é o gráfico de commits do GitHub.</strong> Isto aqui é o caderno; lá é a prova.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROTEIRO ============ -->
+<section class="panel" id="tab-roteiro">
+  <div class="section-title"><h2>Roteiro por fase</h2><div class="line"></div></div>
+  <p class="muted" style="margin-top:-8px;max-width:70ch">
+    Marque só o que você consegue <em>explicar em voz alta</em>. Assistir vídeo não risca item.
+    O progresso é salvo automaticamente neste navegador.
+  </p>
+  <div id="roteiro" style="margin-top:20px"></div>
+</section>
+
+<!-- ============ ROTINA ============ -->
+<section class="panel" id="tab-rotina">
+  <div class="section-title"><h2>Template semanal fixo</h2><div class="line"></div></div>
+  <p class="muted" style="margin-top:-8px;max-width:70ch">
+    Decore este quadro. A previsibilidade é o que economiza energia — você não deve gastar
+    função executiva decidindo <em>o que</em> estudar hoje.
+  </p>
+  <div class="grid g2" id="rotina" style="margin-top:20px"></div>
+
+  <div class="section-title"><h2>Seu primeiro dia</h2><div class="line"></div></div>
+  <div class="card neon rotina-card">
+    <p class="muted" style="margin-top:0">Na próxima segunda, 19h. Sem planejar mais nada, sem ler mais nada:</p>
+    <div class="table-wrap"><table><tbody id="primeiroDia"></tbody></table></div>
+    <div class="callout">Pronto. Primeiro commit verde, primeiro badge, primeira VM. O plano começou.</div>
+  </div>
+</section>
+
+<!-- ============ NOTAS ============ -->
+<section class="panel" id="tab-notas">
+  <div class="section-title">
+    <h2>Anotações</h2>
+    <div class="line"></div>
+    <span class="faint"><b id="notaCount">0</b> salvas</span>
+  </div>
+
+  <div class="grid" style="grid-template-columns:320px 1fr;gap:18px" id="notasGrid">
+    <div class="card" style="padding:16px">
+      <button class="btn primary" id="nNova" style="width:100%;justify-content:center;margin-bottom:14px">+ Nova anotação</button>
+      <div class="note-list" id="notaLista"></div>
+      <button class="btn ghost sm" id="nExportAll" style="width:100%;justify-content:center;margin-top:14px">Exportar todas (.md)</button>
+    </div>
+
+    <div class="card neon">
+      <div class="row" style="margin-bottom:4px">
+        <label class="field fixed" style="width:170px"><span>Data</span><input type="date" id="nData"></label>
+        <label class="field"><span>Título</span><input type="text" id="nTitulo" placeholder="Ex.: DNS — o que acontece antes do HTTP"></label>
+        <label class="field fixed" style="width:200px"><span>Tags</span><input type="text" id="nTags" placeholder="redes, dns"></label>
+      </div>
+      <label class="field">
+        <span>Conteúdo (markdown)</span>
+        <textarea id="nCorpo" rows="18" placeholder="Regra 6 — cinco linhas, sem capricho:&#10;&#10;1. O que eu estudei hoje&#10;2. O que finalmente fez sentido&#10;3. O que continuou confuso&#10;4. Comando/ferramenta nova que usei&#10;5. Onde eu paro amanhã"></textarea>
+      </label>
+      <div class="actions">
+        <button class="btn primary" id="nSalvar">Salvar <span class="kbd" style="color:inherit;border-color:rgba(0,0,0,.25)">Ctrl+S</span></button>
+        <button class="btn" id="nExport">Baixar .md</button>
+        <button class="btn ghost" id="nCopiar">Copiar markdown</button>
+        <button class="btn danger" id="nDel" style="display:none;margin-left:auto">Apagar</button>
+      </div>
+      <div class="callout">
+        <strong>Fluxo do commit:</strong> baixe o <code>.md</code>, mova para a pasta <code>notas/</code> do repositório e rode
+        <code>git add . &amp;&amp; git commit -m "notas: DD/MM" &amp;&amp; git push</code>.
+        O quadradinho verde do GitHub é a recompensa — e no fim das contas o portfólio.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SESSÕES ============ -->
+<section class="panel" id="tab-sessoes">
+  <div class="section-title">
+    <h2>Registro de sessões</h2>
+    <div class="line"></div>
+    <span class="faint"><b id="sessCount">0</b> registradas</span>
+  </div>
+
+  <div class="card neon" style="margin-bottom:18px">
+    <div class="row">
+      <label class="field fixed" style="width:170px"><span>Data</span><input type="date" id="sData"></label>
+      <label class="field">
+        <span>Tipo</span>
+        <select id="sTipo">
+          <option>Segunda — conteúdo novo</option>
+          <option>Sexta — lab leve</option>
+          <option>Sábado — consolidação</option>
+          <option>Domingo — livre</option>
+          <option>Extra / reposição</option>
+          <option>Mínimo de 25 min (Regra 1)</option>
+        </select>
+      </label>
+      <label class="field fixed" style="width:140px"><span>Minutos</span><input type="number" id="sMin" min="5" step="5" placeholder="25"></label>
+    </div>
+    <label class="field">
+      <span>As 5 linhas (Regra 6)</span>
+      <textarea id="sResumo" rows="6" placeholder="O que aprendeu hoje. Sem capricho — cinco linhas bastam."></textarea>
+    </label>
+    <div class="actions" style="align-items:center">
+      <button class="btn primary" id="sSalvar">Registrar sessão</button>
+      <label class="chk" style="padding:6px 10px">
+        <input type="checkbox" id="sVirarNota" checked>
+        <span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="#04121a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <span class="txt" style="font-size:.85rem">salvar também como anotação</span>
+      </label>
+    </div>
+    <div class="callout">
+      Registre <strong>principalmente</strong> as sessões de 25 minutos. São elas que mantêm a corrente viva —
+      e a corrente é o que mantém o projeto vivo, não o volume de horas.
+    </div>
+  </div>
+
+  <div class="card" style="padding:8px 12px">
+    <div id="sessLista"></div>
+  </div>
+</section>
+
+<!-- ============ REGRAS ============ -->
+<section class="panel" id="tab-regras">
+  <div class="section-title"><h2>As 6 regras de operação</h2><div class="line"></div></div>
+  <p class="muted" style="margin-top:-8px;max-width:70ch">
+    Se você só levar uma coisa do plano, leve esta seção. O conteúdo está na internet de graça —
+    o que falha é o sistema em volta.
+  </p>
+  <div class="grid" style="gap:14px;margin-top:20px" id="regras"></div>
+
+  <div class="section-title"><h2>Foco e função executiva</h2><div class="line"></div></div>
+  <div class="card"><ul class="clean" id="foco" style="font-size:.9rem"></ul></div>
+
+  <div class="section-title"><h2>A conta de tempo</h2><div class="line"></div></div>
+  <div class="card">
+    <ul class="clean" style="font-size:.9rem">
+      <li><strong>4h corridas de estudo focado não existem.</strong> Nem com neurotípico. O realista é 3 blocos de 50 min com pausas de verdade — sobram ~3h efetivas num período de 4h.</li>
+      <li><strong>Sexta à noite é o dia mais frágil.</strong> É o dia que você mais vai furar. Por isso sexta não recebe conteúdo denso — recebe laboratório e coisa divertida.</li>
+      <li><strong>Semana de prova na Univille você vai perder.</strong> Já está previsto. Não é fracasso, é orçamento.</li>
+      <li><strong>~10h efetivas/semana</strong> transformam o roteiro de “12 meses” em <strong>14–16 meses</strong>. Isso é normal e continua sendo rápido.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ RECURSOS ============ -->
+<section class="panel" id="tab-recursos">
+  <div class="section-title"><h2>Recursos</h2><div class="line"></div></div>
+  <p class="muted" style="margin-top:-8px;max-width:70ch">
+    Escolha <strong>no máximo três</strong> ferramentas de tracking. Mais que isso vira o próprio projeto e você não estuda.
+  </p>
+  <div id="recursos" style="margin-top:20px"></div>
+</section>
+
+<!-- ============ BACKUP ============ -->
+<section class="panel" id="tab-backup">
+  <div class="section-title"><h2>Backup dos dados</h2><div class="line"></div></div>
+  <div class="grid g2">
+    <div class="card neon">
+      <h2>Exportar</h2>
+      <p class="muted" style="font-size:.89rem">Tudo (checklists, anotações e sessões) fica salvo no
+      <code>localStorage</code> <strong>deste navegador</strong>. Limpar o cache apaga. Exporte de vez em quando
+      e commite o JSON junto com as anotações.</p>
+      <div class="actions"><button class="btn primary" id="bExport">Baixar backup .json</button></div>
+    </div>
+    <div class="card">
+      <h2>Importar</h2>
+      <p class="muted" style="font-size:.89rem">Restaura um backup. <strong>Substitui</strong> tudo que estiver neste navegador.</p>
+      <label class="field"><span>Arquivo .json</span><input type="file" id="bImport" accept="application/json,.json"></label>
+      <div class="actions"><button class="btn danger" id="bZerar">Zerar tudo</button></div>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Aviso do próprio plano</h2><div class="line"></div></div>
+  <div class="card" style="border-color:rgba(255,181,69,.4)">
+    <p style="margin:0" class="muted">
+      <strong style="color:var(--warn)">Regra 5.</strong> Este site foi construído uma vez, fora do horário de estudo, e está
+      <strong>terminado</strong>. Se em algum mês bater a vontade de adicionar gráfico novo, tema, integração com API do
+      TryHackMe ou sincronização na nuvem — isso é procrastinação produtiva, não estudo. Anote a ideia na aba
+      Anotações com a tag <code>portfolio</code> e construa depois do mês 9, como projeto de portfólio.
+      Agora, fecha esta aba e abre o TryHackMe.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>cyber_plano · dados locais no navegador · sem servidor, sem rastreamento</span>
+  <span>o tracker de verdade é o seu gráfico de commits</span>
+</footer>
+
+<div id="toast"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
