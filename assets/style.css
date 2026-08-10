@@ -342,6 +342,8 @@ label.chk input:checked ~ .box {
 }
 label.chk input:checked ~ .box svg { opacity: 1; transform: none; }
 label.chk input:checked ~ .txt { color: var(--txt-faint); text-decoration: line-through; text-decoration-color: rgba(34,224,255,.5); }
+/* variante para caixas de opção (não são marcos concluídos — não devem ser riscadas) */
+label.chk.plain input:checked ~ .txt { color: var(--txt); text-decoration: none; }
 label.chk .txt { font-size: .92rem; }
 
 /* ---------- tabelas ---------- */
@@ -492,6 +494,10 @@ label.field > span {
 .note-item .t { font-weight: 600; font-size: .9rem; margin-bottom: 3px; }
 .note-item .d { font-family: var(--mono); font-size: .72rem; color: var(--txt-faint); }
 .note-item .p { font-size: .8rem; color: var(--txt-faint); margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 860px) {
+  #notasGrid { grid-template-columns: 1fr !important; }
+  .note-list { max-height: 260px; }
+}
 
 .empty {
   text-align: center; padding: 40px 20px;

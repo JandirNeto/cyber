@@ -129,6 +129,7 @@ function renderPainel() {
   const h = horasTotais();
 
   $("#streakNum").textContent = st;
+  $("#streakUn").textContent = st === 1 ? "dia" : "dias";
   $("#streakChip").classList.toggle("cold", st === 0);
 
   $("#ringVal").textContent = g.pct + "%";
