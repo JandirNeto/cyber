@@ -108,6 +108,7 @@ function sessoesUltimasSemanas(sem = 8) {
 /** Regra 2: duas sessões-alvo (seg/sex) perdidas seguidas acende o alerta. */
 function alertaRegra2() {
   const set = diasComSessao();
+  if (!set.size) return false; // o plano ainda não começou — não há corrente para quebrar
   const alvos = [];
   const d = new Date();
   for (let i = 0; i < 21 && alvos.length < 2; i++) {
@@ -165,6 +166,9 @@ function renderPainel() {
       Não tente recuperar tudo: faça <strong>25 minutos hoje</strong> e registre. Só isso.</div>`;
   } else if (st === 0 && state.sessions.length) {
     box.innerHTML = `<div class="callout">A corrente está em zero. Regra 1: <strong>25 minutos</strong> resolvem isso hoje.</div>`;
+  } else if (!state.sessions.length) {
+    box.innerHTML = `<div class="callout">Nada registrado ainda. O roteiro da primeira noite está na aba
+      <a href="#rotina">Rotina</a> — e a Fase 0 inteira cabe numa semana.</div>`;
   } else {
     box.innerHTML = "";
   }
@@ -592,4 +596,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const h = location.hash.slice(1);
   if (h && $("#tab-" + h)) irPara(h);
+
+  window.addEventListener("hashchange", () => {
+    const t = location.hash.slice(1);
+    if (t && $("#tab-" + t) && !$("#tab-" + t).classList.contains("active")) irPara(t);
+  });
 });
