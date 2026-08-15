@@ -13,7 +13,7 @@ Modelo:
 ```markdown
 # Assunto da sessão
 
-> 12/08/2026 (seg) · #redes #dns
+> 14/08/2026 (Sex) · #redes #dns
 
 1. O que eu estudei hoje
 2. O que finalmente fez sentido
